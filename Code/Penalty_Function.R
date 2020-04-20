@@ -44,6 +44,7 @@ cal_penalty <- function(data,label_dat){
   beta_initial <- beta
   
   #calculate penalties
+  data_mean <- colMeans(data_new) # Update data_mean
   beta <- beta * w
   beta <- matrix(beta, nrow=1)
   data_mean <- matrix(data_mean)

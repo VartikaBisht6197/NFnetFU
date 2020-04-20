@@ -17,7 +17,8 @@ incorporate_groups <- function(df,group_list){
       k = 1
       for (j in colnames(df_group)) {
         new_col = new_col + (df[,j]*pca.loadings[k][1])
-        col_name = c(col_name,substr(j,1,5))
+        #col_name = c(col_name,substr(j,1,5))
+        col_name = c(col_name,j)
         k = k + 1
       }
       col_name = paste(col_name, sep = "", collapse = "~")

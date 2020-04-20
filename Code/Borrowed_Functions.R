@@ -10,15 +10,6 @@ in_2_dec <- function(list_given,n){
   return(list_given)
 }
 
-#Function ti plot correlation plot
-#Input : data frame
-#Output : plot
-corr_plot <- function(col_var_data){
-  cormat_TSK <- round(cor(col_var_data),2)
-  melted_cormat_TSK <- melt(cormat_TSK)
-  ggplot(data = melted_cormat_TSK, aes(x=Var1, y=Var2, fill=value)) + 
-    geom_tile()}
-
 #Create labels for data using factors
 #Input : list - num[]
 #Output : list - num[]
