@@ -36,3 +36,19 @@ Network_start_end <- function(df_need,manhattan){
     value = as.vector(inDist))
   return(d)
 }
+
+
+
+apply_cosine_similarity <- function(df){
+  cos.sim <- function(df, ix) 
+  {
+    A = df[ix[1],]
+    B = df[ix[2],]
+    return( sum(A*B)/sqrt(sum(A^2)*sum(B^2)) )
+  }   
+  n <- nrow(df) 
+  cmb <- expand.grid(i=1:n, j=1:n) 
+  C <- matrix(apply(cmb,1,function(cmb){ cos.sim(df, cmb) }),n,n)
+  C
+}
+
