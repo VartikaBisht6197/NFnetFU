@@ -75,7 +75,7 @@ for (i in 1:length(OTU_melt_matrix$value)) {
   if(OTU_melt_matrix$value[i]==0)
     del <- c(del,i)
 }
-edge_matrix <- as.matrix(OTU_melt_matrix[-del,][,c("X1","X2")])
+edge_matrix <- as.matrix(OTU_melt_matrix[-del,][,c(colnames(OTU_melt_matrix)[1],colnames(OTU_melt_matrix)[2])])
 rownames(edge_matrix) <- seq(1,dim(edge_matrix)[1])
 
 #Making the Network ( LAYOUT : layout_in_circle, layout_with_fr, layout_nicely(g) )
@@ -103,4 +103,4 @@ plot(g, layout=layout_in_circle, vertex.size=vertex_wt,edge.width = E(g)$weight)
 dev.off()
 
 
-## Output : Network and Network Legends with Node size (Legends)
+## Output : Network and Network Legends with Node size (Network_Info)

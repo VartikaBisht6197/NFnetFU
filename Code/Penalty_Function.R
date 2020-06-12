@@ -7,6 +7,7 @@ cal_penalty <- function(data,label_dat){
   n <- nrow(data)
   data_mean <- colMeans(data)
   data_norm <- sqrt(n-1)*apply(data,2,sd)
+  label_dat_mean <- mean(label_dat)
   data <- scale(data, center = data_mean, scale = data_norm)
   
   

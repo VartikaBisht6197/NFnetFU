@@ -4,6 +4,7 @@ source("Incorporate_Groups.R")
 source("Required_Libraries.R")
 source("Borrowed_Functions.R")
 source("MicrobiomeAnalyst.R")
+source("best_epsilon_DBSCAN.R")
 
 #Input csv
 Data_Set_1 <- read.csv("adenoma.csv")[,2:101]
@@ -68,7 +69,7 @@ Microbes <- unique(OTU_network)
 
 ## Input : List of Microbes
 source("Module_4(TSEA Network).R")
-## Output : Network and Network Legends with Node size (Legends)
+## Output : Network and Network Legends with Node size (Network_Info)
 
 
 Name_Change <- as.data.frame(OTU_network)
@@ -76,7 +77,7 @@ rownames(Name_Change) <- feature_inorder
 write.csv(Name_Change,"Features to Microbes for TSEA.csv")
 
 
-## Input : Infusing Data Driven Information
+## Input : TSEA Network and Adaptive LASSO Results
 Cluster_Parameters <- c()
 Cluster_OTU_name <- c()
 for (i in Network_Info[,"Microbe Names"]) {
@@ -102,5 +103,5 @@ write.csv(Data_Bio_Driven,"Biological Network with Data Driven Results fused.csv
 
 ## Input : Module 2 Clusters and TSEA Network
 source("Module_4(Data Driven Network).R")
-## Output : Network with Data Driven Clusters
+## Output : Network with Data Driven Clusters (Data_Bio_Driven_with_clusters)
 

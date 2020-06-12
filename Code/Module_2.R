@@ -28,7 +28,7 @@ print("Grouping Highly Colinear Features Together :-")
 groups_we_need <- list()
 for (i in 1:max(label_clust)) {
   group_we_need <- rownames(label_clust)[which(label_clust %in% i)]
-  print(c(sprintf("Group %s :",i),group_we_need))
+  #print(c(sprintf("Group %s :",i),group_we_need))
   groups_we_need <- list.append(groups_we_need,group_we_need)
 }
 
@@ -36,7 +36,7 @@ for (i in 1:max(label_clust)) {
 #Incorporate cluster to form new data frame
 print("Clubbing features in a group together")
 #Input : data frame , list of clusters , print PCA Loadings used to combine the features
-incorporate_groups_res <- incorporate_groups(as.data.frame(rules_int),groups_we_need,1)
+incorporate_groups_res <- incorporate_groups(as.data.frame(rules_int),groups_we_need,0)
 #Output : data frame as matrix (new_data1) , PCA loadings for the group (PCA_loadings)
 new_data1 <- incorporate_groups_res[1][[1]]
 PCA_loadings <- as.data.frame(t(incorporate_groups_res[2][[1]]))
