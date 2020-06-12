@@ -31,10 +31,35 @@ if(data_analysis =="Dataset_3"){
 if(data_analysis =="Stimulated_Dataset"){
   source("Simulated_data_set.R")
   # Stimulated Dataset
-  stimulated_data <- data[1:20,2:71]
+  stimulated_data <- data[1:20,2:81]
   #Choose Microbiome Data
   data1 <- data.matrix(stimulated_data)
   df_data1 <- stimulated_data
   #Create labels for prediction ( 2nd column )
   label_dat <- as.numeric(class_y[1:20])}
 
+if(data_analysis =="Dataset_adenoma"){
+  # Load Dataset 1
+  Data_Set_1 <- read.table("final.0.03.subsample.csv", header = TRUE)
+  meta_data <- read.csv("meta date.csv")
+  index = c()
+  for (i in 1:length(meta_data$sample)) {
+    index_need <- match(meta_data$sample[i],Data_Set_1$Group)
+    index <- c(index,index_need)
+  }
+  Data_Set_1 <- Data_Set_1[index,]
+  # Choose Microbiome Data
+  df_data1 <- Data_Set_1[4:6393]
+  # Create labels for prediction ( 2nd column )
+  label_dat <- as.numeric(factor(meta_data$dx))
+  results <- rfe(df_data1, meta_data$dx, rfeControl=control)
+  RFFeatures <- results[["optVariables"]][1:100]
+  index = c()
+  for (i in 1:length(RFFeatures)) {
+    index_need <- match(RFFeatures[i],names(df_data1))
+    index <- c(index,index_need)
+  }
+  df_data1 <- df_data1[,index]
+  
+  data1 <- data.matrix(df_data1)
+}
