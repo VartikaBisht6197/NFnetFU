@@ -1,0 +1,9 @@
+"","total","expected","hits","Raw p","Holm p","FDR"
+"Multiple Sclerosis (increase)",5,0.00339,1,0.00339,0.807,0.215
+"Alzheimer's (increase)",6,0.00407,1,0.00407,0.965,0.215
+"Colorectal carcinogenesis (Carcinoma, decrease)",6,0.00407,1,0.00407,0.965,0.215
+"Anorexic (decrease)",7,0.00475,1,0.00475,1,0.215
+"Pediatric Crohn's Disease",7,0.00475,1,0.00475,1,0.215
+"Resistance to Immune Checkpoint Inhibitors (decrease)",8,0.00543,1,0.00543,1,0.215
+"Type I Diabetes (increased)",13,0.00882,1,0.00882,1,0.3
+"Uveitis (decrease)",37,0.0251,1,0.0251,1,0.747

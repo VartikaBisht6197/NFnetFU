@@ -50,7 +50,7 @@ heatmap.2(as.matrix(dist(ADCoeff)),
 dev.off()
 
 
-#Calculating Overall Parameters for all features
+#Calculating Overall scores for all features
 index <- 1
 names_features <- c()
 ADres <- c()
@@ -69,11 +69,27 @@ for(i in regexpr('~', rownames(ADCoeff))){
   index <- index + 1
 }
 
-feature_parameters <- as.data.frame(ADres)
-rownames(feature_parameters) <- names_features
-write.csv(feature_parameters,"Feature Parameters.csv")
-print("Feature Parameters computed and saved")
+feature_scores <- as.data.frame(ADres)
+rownames(feature_scores) <- names_features
+feature_scores <- arrange(feature_scores, ADres)
+write.csv(feature_scores,"Feature scores.csv")
 
-## Output : Feature Parameters (feature_parameters)
+#Histogram of Feature Scores
+tiff("Feature Scores.tiff", width = 10, height = 10, units = 'in', res = 300)
+par(cex = 0.7)
+name <- rownames(feature_scores)
+feature_scores %>%
+  mutate(name=factor(name, levels=name)) %>%
+  ggplot( aes(x=name, y=feature_scores$ADres)) +
+  geom_segment( aes(xend=name, yend=0)) +
+  geom_bar(stat="identity", fill="red", alpha=.6, width=.4)+
+  coord_flip() +
+  theme_bw() +
+  xlab("") + ylab("Feature Score")
+dev.off()
+
+print("Feature scores computed and saved")
+
+## Output : Feature scores (feature_scores)
 
 

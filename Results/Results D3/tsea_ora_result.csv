@@ -1,0 +1,16 @@
+"","total","expected","hits","Raw p","Holm p","FDR"
+"Atrophic Vaginitis (decrease)",1,0.000678,1,0.000678,0.161,0.108
+"Diarrhea Irritable Bowel Syndrome (IBS)",2,0.00136,1,0.00136,0.322,0.108
+"HPV (increase)",2,0.00136,1,0.00136,0.322,0.108
+"Head and neck squamous cell carcinoma (increase)",4,0.00271,1,0.00271,0.638,0.129
+"Type 1 Diabetes (g_decrease)",4,0.00271,1,0.00271,0.638,0.129
+"Obese (decrease)",7,0.00475,1,0.00475,1,0.161
+"Chronic Obstructive Pulmonary Disease (COPD)",8,0.00543,1,0.00543,1,0.161
+"Resistance to PD-L1 monoclonal antibodies (increase)",8,0.00543,1,0.00543,1,0.161
+"Cystic Fibrosis",9,0.00611,1,0.00611,1,0.161
+"Increase Susceptibility to Malaria (decrease)",10,0.00678,1,0.00678,1,0.161
+"Type I Diabetes (increased)",13,0.00882,1,0.00882,1,0.188
+"Professional Athlete (increase)",14,0.0095,1,0.0095,1,0.188
+"Cirrhosis (China, increase)",21,0.0142,1,0.0142,1,0.261
+"Bacterial Vaginosis (increase)",29,0.0197,1,0.0197,1,0.334
+"Liver Cirrhosis (China, decrease)",52,0.0353,1,0.0353,1,0.56

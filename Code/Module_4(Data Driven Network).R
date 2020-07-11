@@ -61,7 +61,7 @@ E(gh)$weight <- c(E(g)$weight,rep(1,(length(edges_added))/2))
 vertex_wt_gh <- c(vertex_wt,rep(10,length(node_no_added)))
 
 #Save the New Fused Network
-jpeg("Final Fused Network.jpg", width = 800, height = 800)
+tiff("Novel Data Driven Biological Network.tiff", width = 10, height = 10, units = 'in', res = 300)
 plot(gh, layout=layout_in_circle, vertex.size=vertex_wt_gh,edge.width = E(gh)$weight,edge.color=col_edges)
 dev.off()
 
@@ -73,17 +73,19 @@ for(i in Cluster_OTU_name){
 }
 
 Data_Bio_Driven_with_clusters <- as.matrix(Data_Bio_Driven)
-for (i in 1:length(node_no_added)) {
-  CP <- abs(feature_parameters[Cluster_OTU_name[node_no_added[i]][[1]],])
-  entry_DB <- c(node_no_added[i],nodes_added[i],"1",CP)
-  Data_Bio_Driven_with_clusters <- rbind(Data_Bio_Driven_with_clusters,entry_DB)
+if(!is.null(node_no_added)){
+  for (i in 1:length(node_no_added)) {
+    CP <- abs(feature_parameters[Cluster_OTU_name[node_no_added[i]][[1]],])
+    entry_DB <- c(node_no_added[i],nodes_added[i],"1",CP)
+    Data_Bio_Driven_with_clusters <- rbind(Data_Bio_Driven_with_clusters,entry_DB)
+    rownames(Data_Bio_Driven_with_clusters) <- NULL
+    temp_col <- c(colnames(Data_Bio_Driven_with_clusters) ,"Features in the Cluster")
+    Data_Bio_Driven_with_clusters <- cbind(Data_Bio_Driven_with_clusters,nodes_in_cluster)
+    colnames(Data_Bio_Driven_with_clusters) <- temp_col
+    write.csv(Data_Bio_Driven_with_clusters,"Final Fused Network.csv")
+  }
 }
-rownames(Data_Bio_Driven_with_clusters) <- NULL
-temp_col <- c(colnames(Data_Bio_Driven_with_clusters) ,"Features in the Cluster")
-Data_Bio_Driven_with_clusters <- cbind(Data_Bio_Driven_with_clusters,nodes_in_cluster)
-colnames(Data_Bio_Driven_with_clusters) <- temp_col
 
-write.csv(Data_Bio_Driven_with_clusters,"Final Fused Network.csv")
 
 print("Final Fused Network Cluster Information Saved!")
 

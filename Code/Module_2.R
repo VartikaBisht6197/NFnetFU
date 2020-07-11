@@ -54,8 +54,19 @@ write.csv(PCA_loadings,"PCA Loadings used to combine groups.csv" )
 print("PCA Loadings used to combine groups saved")
 
 #Correlation plot for Clusterd New Data
-jpeg("Correlation plot for New Clusterd Data.jpg", width = 1000, height = 1000)
+tiff("Correlation plot for New Clusterd Data.tiff", width = 10, height = 10, units = 'in', res = 300)
+par(cex = 0.7)
 corrplot(cor(new_data1), type = "upper")
+dev.off()
+
+#Significantly Correlated : No color = (p value cut off 0.05)
+tiff("p value Correlation plot for clustered new.tiff", width = 10, height = 10, units = 'in', res = 300)
+col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+par(cex = 0.4)
+p.mat <- rcorr(new_data1, type ="spearman")
+corrplot(p.mat$r, method = "color", col = col(200),number.cex = .7,
+         type = "upper", addCoef.col = "black",tl.col = "black",
+         p.mat = p.mat$P, sig.level = 0.05, insig = "blank", tl.srt = 90, diag = TRUE)
 dev.off()
 
 ## Output : Rule Based matrix with Colinearity Handled (new_data1) and PCA Loadings used to combine groups (PCA_loadings) 

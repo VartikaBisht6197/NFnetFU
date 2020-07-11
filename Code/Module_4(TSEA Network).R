@@ -98,7 +98,7 @@ colnames(Network_Info) <- c("Node","Microbe Names","Node Size")
 write.csv(Network_Info,"Network Legends.csv")
 
 vertex_wt <- vertex_wt + rep(10,length(vertex_wt))
-jpeg("TSEA Network.jpg", width = 800, height = 800)
+tiff("Biological Network.tiff", width = 10, height = 10, units = 'in', res = 300)
 plot(g, layout=layout_in_circle, vertex.size=vertex_wt,edge.width = E(g)$weight)
 dev.off()
 
