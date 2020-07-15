@@ -25,12 +25,12 @@ source("best_epsilon_DBSCAN.R")
 Load Data Set :
 ```{r}
 # Load Dataset 2
-Data_Set_1 <- read.csv("adenoma.csv")
+Data_Set_1 <- read.csv("NFnetFU_Dataset2_OTU_abundance(top 100).csv")
 # Choose Microbiome Data
 df_data1 <- Data_Set_1[2:101]
 data1 <- data.matrix(df_data1)
-# Create labels for prediction ( 2nd column )
-meta_data <- read.csv("meta date.csv")
+# Create labels for prediction
+meta_data <- read.csv("NFnetFU_Dataset2_metadata.csv")
 label_dat <- as.numeric(factor(meta_data$dx))
   
 ```
@@ -126,7 +126,7 @@ If Features are OTU and need to be changed into appropriate Microbes for TSEA
 if(TSEA_feature == "OTU"){
 #List of Microboes from selected features (OTU)
 #OTU to Microbes
-OTU_file <- read.table("final.csv", header = 1)
+OTU_file <- read.table("NFnetFU_Dataset2_taxanomy.csv", header = 1)
 OTU_index <- which(OTU_file$OTU %in% rownames(feature_scores))
 selected_OTU <- OTU_file[OTU_index,]
 feature_inorder <- selected_OTU$OTU
