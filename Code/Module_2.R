@@ -10,22 +10,22 @@ for (i in epsilons) {
     }
   }
 }
-cluster_found <- i
+cluster_found <- max(unique(res$cluster))
 print(sprintf("Epsilon value used : %s",i))
 print(sprintf("%s cluster(s) found!",max(res$cluster)))
 print("Clustering Done!")
 
-if(cluster_found > 0){}
+
 label_clust <- as.matrix(res[["cluster"]])
 rownames(label_clust) <- colnames(scaled_rules_int)
 colnames(label_clust) <- c("Cluster Number")
 write.csv(label_clust,"Feature's cluster number.csv")
 print("Feature's cluster number saved")
 
-
+groups_we_need <- list()
+if(cluster_found > 0){
 #Group together the clusters as list of list
 print("Grouping Highly Colinear Features Together :-")
-groups_we_need <- list()
 for (i in 1:max(label_clust)) {
   group_we_need <- rownames(label_clust)[which(label_clust %in% i)]
   #print(c(sprintf("Group %s :",i),group_we_need))
@@ -68,6 +68,7 @@ corrplot(p.mat$r, method = "color", col = col(200),number.cex = .7,
          type = "upper", addCoef.col = "black",tl.col = "black",
          p.mat = p.mat$P, sig.level = 0.05, insig = "blank", tl.srt = 90, diag = TRUE)
 dev.off()
-
+} else {print("No Clusters found")
+  new_data1 <- as.data.frame(rules_int)}
 ## Output : Rule Based matrix with Colinearity Handled (new_data1) and PCA Loadings used to combine groups (PCA_loadings) 
 

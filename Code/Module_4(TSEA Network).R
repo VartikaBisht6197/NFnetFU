@@ -55,7 +55,7 @@ for(i in 1:length(current.mset[index_OTU_res])){
   if(length(inter_OTU)>0){
     combini <- expand.grid(inter_OTU,inter_OTU)
     for (j in 1:dim(combini)[1]) {
-      adjacency_matrix[combini[j,1],combini[j,2]] <- adjacency_matrix[combini[j,1],combini[j,2]] + 1
+      adjacency_matrix[as.character(combini[j,1]),as.character(combini[j,2])] <- adjacency_matrix[as.character(combini[j,1]),as.character(combini[j,2])] + 1
     }
   }
 }

@@ -1,5 +1,27 @@
 ## Input : Numeric Labels and Microbiome Abundance Data
 
+#Remove zero sd
+sdev_0 <- c()
+for (i in 1:dim(data1)[2]) {
+  if(sd(data1[,i]) == 0){
+    sdev_0 <- c(sdev_0,i)
+  }
+}
+if(length(sdev_0)>0)
+{
+  print(sprintf("%s features had Zero-Standard-Deviation in the original dataset",length(sdev_0)))
+  write.csv(colnames(data1)[sdev_0], "Zero-Standard-Deviation features in the original dataset.csv")
+  print("Zero-Standard-Deviation in the original dataset features saved.")
+  
+  #New Rule Based Matrix without Zero-Standard-Deviation Features
+  data1 <- subset(data1, select = -sdev_0)
+  write.csv(data1, "Original dataset without Zero-Standard-Deviation Features.csv")
+  print("Original dataset without Zero-Standard-Deviation Features saved")
+  
+} else {
+  sprintf("%s features had Zero-Standard-Deviation",length(sdev_0)) }
+
+
 #ANFIS preprocessing of data
 data_train <- cbind(data1,label_dat)
 range.data.input <- matrix(0,nrow = 2,ncol = dim(data_train)[2])
@@ -8,9 +30,7 @@ for (i in 1:dim(data_train)[2]) {
   range.data.input[2,i] <- max(data_train[,i])
 }
 
-#Correlation plot for original dataset
-tiff("Correlation plot for original dataset.tiff", width = 10, height = 10, units = 'in', res = 300)
-par(cex = 0.7)
+tiff("Correlation plot for original dataset.tiff", res = 300)
 corrplot(cor(data1), type = "upper")
 dev.off()
 
@@ -34,22 +54,6 @@ print("New labels have been assigned!")
 rules_int <- rules_mat[,1:(rules_c-1)]
 write.csv(rules_int,"Ruled Based Matrix.csv")
 print("Rule based matrix is saved!")
-
-#Correlation plot for rule based dataset
-tiff("Correlation plot for rule based dataset.tiff", width = 10, height = 10, units = 'in', res = 300)
-par(cex = 0.7)
-corrplot(cor(rules_int), type = "upper")
-dev.off()
-
-#Significantly Correlated : No color = (p value cut off 0.05)
-tiff("p value Correlation plot for rule based dataset.tiff", width = 10, height = 10, units = 'in', res = 300)
-col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
-par(cex = 0.4)
-p.mat <- rcorr(rules_int, type ="spearman")
-corrplot(p.mat$r, method = "color", col = col(200),number.cex = .7,
-         type = "upper", addCoef.col = "black",tl.col = "black",
-         p.mat = p.mat$P, sig.level = 0.05, insig = "blank", tl.srt = 90, diag = TRUE)
-dev.off()
 
 #Zero Standard Deviation
 sdev_0 <- c()

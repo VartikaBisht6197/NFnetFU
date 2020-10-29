@@ -1,48 +1,47 @@
 "","ADres"
-"s__distasonis.",-0.201575145149242
-"s__hathewayi.",-0.198334532390338
-"s__adolescentis.",-0.193154469790888
-"s__citroniae.",-0.192965313673659
-"s__ramosum.",-0.192381236300713
-"s__fragilis.",-0.192266400973738
-"s__symbiosum.",-0.192223575757548
-"o__Alteromonadales",-0.19214662429339
-"g__Blautia",-0.192042584214741
-"f__Paraprevotellaceae",-0.192040578339148
-"g__Staphylococcus",-0.191832081448367
-"s__stutzeri.",-0.188810064202177
-"f__Microbacteriaceae",-0.187751134367252
-"g__Paraprevotella",-0.137694118617018
-"g__Paraprevotella.1",-0.137694118617017
-"g__Parvimonas",-0.135912191251147
-"g__Shewanella",-0.135912191251147
-"f__Shewanellaceae",-0.135912191251146
-"s__Parvimonas.sp",-0.135912191251146
-"s__Desulfovibrionaceae.sp",-0.135472222211557
-"g__Desulfovibrionaceae.unidentified",-0.135472222211557
-"s__mucilaginosa.",-0.134867987031952
-"g__Rothia",-0.134867987031952
-"g__Erysipelotrichaceae.cc_115",-0.134497323222884
-"s__Erysipelotrichaceae.cc_115.sp",-0.134497323222884
-"c__Lentisphaeria",-0.110966023029955
-"o__Victivallales",-0.110966023029955
-"p__Lentisphaerae",-0.110966023029955
-"c__Coriobacteriia",-0.110173957229804
-"o__Coriobacteriales",-0.110173957229804
-"f__Coriobacteriaceae",-0.110173957229804
-"s__Actinomyces",-0.104899125547093
-"g__Actinomyces",-0.104899125547093
-"s__Sphingomonas.sp",-0.0869118815006119
-"s__Roseburia.sp",-0.0869118815006119
-"f__Brevibacteriaceae",0.0820822374061392
-"s__Brevibacterium.sp",0.0820822374061392
-"g__Streptococcus",0.0912856283021641
-"c__Gammaproteobacteria",0.11022142544817
-"f__Enterobacteriaceae",0.111354832380865
-"o__Enterobacteriales",0.111354832380865
-"c__Bacilli",0.123040087845881
-"f__Myxococcales.0319.6G20",0.127112781680663
-"g__Tepidimonas",0.135903143694004
-"s__Tepidimonas.sp",0.135903143694004
-"s__Myxococcales.sp",0.144135087753113
-"f__Prevotellaceae",5.00368579178135
+"s__distasonis",-0.212048617636957
+"s__hathewayi",-0.208374019731507
+"s__citroniae",-0.194959586583435
+"s__adolescentis",-0.194943609388287
+"s__ramosum",-0.193821617991482
+"g__Paraprevotella",-0.193475213483939
+"s__fragilis",-0.193428595225005
+"s__symbiosum",-0.193402033901498
+"o__Alteromonadales",-0.193210645280568
+"f__Paraprevotellaceae",-0.1931740467896
+"g__Staphylococcus",-0.192038759983206
+"g__Blautia",-0.189348106448204
+"s__stutzeri",-0.185571828113318
+"f__Microbacteriaceae",-0.182360738968116
+"g__Parvimonas",-0.136729250471324
+"s__Parvimonas sp",-0.136729250471323
+"g__Shewanella",-0.136728456726114
+"f__Shewanellaceae",-0.136728456726114
+"s__Desulfovibrionaceae sp",-0.135712820178092
+"g__Desulfovibrionaceae unidentified",-0.135712820178092
+"s__mucilaginosa",-0.135558810420497
+"g__Rothia",-0.135558810420497
+"g__Erysipelotrichaceae cc_115",-0.114120407721642
+"s__Erysipelotrichaceae cc_115 sp",-0.114120407721642
+"c__Lentisphaeria",-0.111645678037991
+"o__Victivallales",-0.111645678037991
+"p__Lentisphaerae",-0.111645678037991
+"c__Coriobacteriia",-0.109958563622457
+"o__Coriobacteriales",-0.109958563622457
+"f__Coriobacteriaceae",-0.109958563622457
+"g__Actinomyces",-0.10579368647186
+"s__Actinomyces",-0.10579368647186
+"s__Sphingomonas sp",-0.0876530504348899
+"s__Roseburia sp",-0.0876530504348899
+"f__Brevibacteriaceae",0.0825909735975427
+"s__Brevibacterium sp",0.0825909735975427
+"g__Streptococcus",0.0918514060433644
+"c__Gammaproteobacteria",0.110898894344253
+"f__Enterobacteriaceae",0.112039267689697
+"o__Enterobacteriales",0.112039267689697
+"c__Bacilli",0.123802676045944
+"f__Myxococcales 0319-6G20",0.12786887688213
+"g__Tepidimonas",0.136727912405013
+"s__Tepidimonas sp",0.136727912405013
+"s__Myxococcales sp",0.144992435431073
+"f__Prevotellaceae",5.0035297189426
