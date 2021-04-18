@@ -32,6 +32,10 @@ https://github.com/xia-lab/MicrobiomeAnalystR
 Given a predictor matrix X and a response variable Y, this package aims to perform variable selection for a predictive generalised linear model. It does this in two stages: first a subsampling method with LASSO for ranking the variables, then a forward selection algorithm. Use the following link to dowlaoad all the necessary R scripts to run SuRF. 
 https://www.mathstat.dal.ca/~tkenney/Rpackages/
 
+### LEfSe :
+LEfSe uses Linear Discriminant Analysis to estimate the effect size of each differentially abundant feature and, if desired by the investigator, to perform dimension reduction. Use the follwoing link to perform LEfSe analysis on galaxy.
+https://huttenhower.sph.harvard.edu/galaxy/
+
 ## Data :
 
 This section has all the microbiome/OTU abundance matrices, taxanomical files and labels for all the three datasets used for the analysis.
