@@ -1,0 +1,293 @@
+---
+title: "NFnetFU Dataset 2"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+
+Set Working Directiory :
+```{r}
+setwd("/Users/Vartika_Bisht/Individual_Project")
+```
+
+Load all source codes :
+```{r}
+source("Penalty_Function.R")
+source("Incorporate_Groups.R")
+source("Libraries_Needed.R")
+source("Borrowed_Functions.R")
+source("MicrobiomeAnalyst.R")
+source("best_epsilon_DBSCAN.R")
+```
+
+Load Data Set :
+```{r}
+# Load Dataset 2
+Data_Set_1 <- read.csv("/Users/Vartika_Bisht/NFnetFU/Data/NFnetFU_Dataset2_OTU_abundance(top 100).csv")
+
+# Choose Microbiome Data
+df_data1 <- as.data.frame(Data_Set_1[,2:101])
+data1 <- data.matrix(df_data1)
+
+# Create labels for prediction ( 2nd column )
+meta <- read.csv("/Users/Vartika_Bisht/NFnetFU/Data/NFnetFU_Dataset2_metadata.csv")
+label_dat <- as.numeric(factor(meta$dx))
+
+```
+
+Input Dataset :
+```{r}
+head(df_data1)
+```
+
+Input Data for Module 1 (Features) :
+```{r}
+head(as.data.frame(data1))
+```
+
+Input Data for Module 1 (Output Variable: Given Variable) :
+```{r}
+#Labels
+as.character(meta$dx)
+```
+
+Input Data for Module 1 (Output Variable: Desired Labels) :
+```{r}
+#Desired Labels
+label_dat
+```
+
+Module 1:
+```{r}
+## Input : Numeric Labels(label_dat) and Microbiome Abundance Data(data1)
+source("Module_1.R")
+## Output : Rule Based Matrix (rules_int) , Scaled Rule Based Matrix (scaled_rules_int) and Labels (label_dat)
+```
+
+Module 1 Output (Rule Based Matrix):
+```{r}
+head(as.data.frame(rules_int))
+```
+
+Module 1 Output (Labels):
+```{r}
+as.data.frame(label_dat)[,1]
+```
+
+Module 2:
+```{r}
+## Input : Scaled Rule Based Matrix (scaled_rules_int)
+source("Module_2.R")
+## Output : Rule Based matrix with Colinearity Handled (new_data1) and PCA Loadings used to combine groups (PCA_loadings) 
+```
+
+Module 2 Output (Clusters):
+```{r}
+groups_we_need
+```
+
+Module 2 Output (PCA Loadings):
+```{r}
+head(as.data.frame(t(PCA_loadings)))
+```
+
+Module 2 Output (New Data Frame):
+```{r}
+head(as.data.frame(new_data1))
+```
+
+Module 3:
+```{r}
+## Input : Rule Based matrix with Colinearity Handled (new_data1) and PCA Loadings used to combine groups (PCA_loadings) 
+source("Module_3.R")
+## Output : Feature Parameters (feature_score)
+```
+
+Module 3 Output (Adaptive LASSO Results):
+```{r}
+head(as.data.frame(feature_scores))
+```
+
+Performace:
+```{r}
+predicted_values <- predict(alasso1_cv,data_new, type = 'response',s = alasso1_cv$lambda.min)
+library(PRROC)
+
+PRROC_obj <- roc.curve(scores.class0 = predicted_values, weights.class0=label_dat,
+                       curve=TRUE)
+plot(PRROC_obj)
+```
+
+
+Module 4 (TSEA - Specify Disease):
+```{r}
+#Diseases to look for in TSEA
+disease <- c("Colorectal","Crohn","Colon")
+```
+
+Module 4 (TSEA Type of feature):
+```{r}
+TSEA_feature <- "OTU"
+```
+
+
+Module 4 (TSEA - OTU):
+If Features are OTU and need to be changed into appropriate Microbes for TSEA
+```{r}
+if(TSEA_feature == "OTU"){
+#List of Microboes from selected features (OTU)
+#OTU to Microbes
+OTU_file <- read.table("/Users/Vartika_Bisht/NFnetFU/Data/NFnetFU_Dataset2_taxanomy.csv", header = 1)
+OTU_index <- which(OTU_file$OTU %in% rownames(feature_scores))
+selected_OTU <- OTU_file[OTU_index,]
+feature_inorder <- selected_OTU$OTU
+write.csv(selected_OTU,"OTU Microbes Selected Table.csv")
+
+#Valid Microbe Names
+OTU_network <- c()
+taxa <- strsplit(as.character(selected_OTU$Taxonomy),";")
+for(i in 1:length(taxa)){
+  if(taxa[[i]][1] == "unclassified(100)"){
+    OTU_network <- c(OTU_network,"unclassified")
+  }else{
+     for(j in rev(taxa[[i]])){
+    mname <- substr( j , 1 , nchar(j)-5)
+    if(mname != "unclassified"){
+      OTU_network <- c(OTU_network,mname)
+      break()}
+    }
+  }
+}
+
+Name_Change <- as.data.frame(OTU_network)
+rownames(Name_Change) <- feature_inorder
+write.csv(Name_Change,"Features to Microbes for TSEA.csv")
+
+}
+
+```
+
+Module 4 (TSEA - Microbes of Different Taxa Level):
+If Features are Microbes of Different Taxa Level and need to be changed into appropriate Microbes for TSEA
+```{r}
+if(TSEA_feature == "Microbes"){
+  #List of Microboes from selected features (Microbes)
+  #Microbes_name <- substring(colnames(rules_int),4)
+  Microbes_name <- colnames(rules_int)
+  OTU_network <- c()
+  for(i in Microbes_name){
+    n <- strsplit(i,c(";"))[[1]]
+    if((length(n)>1)&&(n[1] == "uncultured")||(length(n)>1)&&(n[1] == "X")){
+      if((n[2] == '1')||(n[2] == '2')){
+        OTU_network <- c(OTU_network,'uncultured')
+      }else{ OTU_network <- c(OTU_network,n[2])}
+    }else{
+      if((n[2]%in%c("02d06","PW3","SMB53","cc_115","rc4-4"))||(n[1]=="Unclassified_Genus")){
+        OTU_network <- c(OTU_network,n[1])
+      }else {OTU_network <- c(OTU_network,n[2])}
+    }
+  }
+  feature_inorder <- colnames(rules_int)
+  
+  Name_Change <- as.data.frame(OTU_network)
+  rownames(Name_Change) <- feature_inorder
+  write.csv(Name_Change,"Features to Microbes for TSEA.csv")
+}
+```
+
+Module 4 (TSEA - The names used for TSEA with the feature associated):
+```{r}
+head(as.data.frame(Name_Change))
+```
+
+Module 4 (TSEA - The names used for TSEA with the feature associated):
+```{r}
+Microbes <- unique(Name_Change$OTU_network)
+Microbes <- as.character(Microbes)
+Microbes
+```
+
+Module 4 (TSEA - The names used for TSEA with the feature associated):
+```{r}
+## Input : List of Microbes
+source("Module_4(TSEA Network).R")
+## Output : Network and Network Legends with Node size (Legends)
+```
+
+Module 4 (TSEA Network):
+```{r}
+plot(g, layout=layout_in_circle, vertex.size=vertex_wt,edge.width = E(g)$weight)
+```
+
+Module 4 (TSEA Network Legends):
+```{r}
+as.data.frame(Network_Info)
+```
+
+Module 4 (Infusing Data Driven Information):
+TSEA Network and Adaptive LASSO Results
+```{r}
+## Input : TSEA Network and Adaptive LASSO Results
+Cluster_Parameters <- c()
+Cluster_OTU_name <- c()
+for (i in Network_Info[,"Microbe Names"]) {
+  index <- which(OTU_network %in% i)
+  OTU <- as.character(feature_inorder[index])
+  Cluster_OTU_name <- append(Cluster_OTU_name,list(OTU))
+  if(length(OTU) > 1){
+    OTUs_val <- c()
+    for (j in OTU) {
+      OTUs_val <- c( OTUs_val , abs(feature_scores[j,]) )
+    }
+    CP <- (sum(OTUs_val)/length(OTUs_val))[1]
+  } else {
+    CP <- abs(feature_scores[OTU,])
+  }
+  Cluster_Parameters <- c( Cluster_Parameters , CP )
+}
+Data_Bio_Driven <- cbind(Network_Info,Cluster_Parameters)
+rownames(Data_Bio_Driven) <- NULL
+colnames(Data_Bio_Driven)[4] <- "Node Score"
+write.csv(Data_Bio_Driven,"Biological Network with Data Driven Results fused.csv")
+## Output : Data Driven Cluster Parameters added
+
+```
+
+Module 4 (Infusing Data Driven Information):
+TSEA Network and Adaptive LASSO Results
+```{r}
+as.data.frame(Data_Bio_Driven)
+```
+
+Module 4 (Infusing Data Driven Information):
+Module 2 Clusters and TSEA Network
+```{r}
+## Input : Module 2 Clusters and TSEA Network
+source("Module_4(Data Driven Network).R")
+## Output : Network with Data Driven Clusters
+```
+
+Module 4 (Infusing Data Driven Information):
+Module 2 Clusters and TSEA Network
+```{r}
+#Green Edges <- TSEA
+#Red Edges <- Data Driven Cluslters
+plot(gh, layout=layout_in_circle, vertex.size=vertex_wt_gh,edge.width = E(gh)$weight,edge.color=col_edges)
+```
+
+Module 4 (Infusing Data Driven Information):
+Module 2 Clusters and TSEA Network
+```{r}
+as.data.frame(Data_Bio_Driven_with_clusters)
+```
+
+
+
+
+
+
+
+
+
