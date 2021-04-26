@@ -39,3 +39,6 @@ https://huttenhower.sph.harvard.edu/galaxy/
 ## Data :
 
 This section has all the microbiome/OTU abundance matrices, taxanomical files and labels for all the three datasets used for the analysis.
+
+## Manual :
+An R markdown manual for the pipeline explaining the inputs and outputs for each module can be found at https://rpubs.com/Vartika/760624
